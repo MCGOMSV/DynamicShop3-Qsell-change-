@@ -1,11 +1,3 @@
-Supported Minecraft versions: 1.16.5 ~ 1.21
+다이나믹샵 Qsell기능이 ItemMeta 비교가 안되서 CusotomModelData로 인식하게 변경
 
-Free version https://www.spigotmc.org/resources/65603/
-
-**Premium version** https://www.spigotmc.org/resources/100058/
-
-**Donation** https://www.paypal.com/paypalme/7sat
-
-Discord https://discord.gg/5HQjBqU
-
-bStats https://bstats.org/plugin/bukkit/DynamicShop
+이외 할인(discount)도 음수 가능하게 수정
