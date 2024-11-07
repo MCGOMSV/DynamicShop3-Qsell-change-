@@ -224,44 +224,38 @@ public final class ShopUtil
     }
 
     // 상점에서 아이탬타입 찾기
-    public static int findItemFromShop(String shopName, ItemStack item)
-    {
-        if (item == null || item.getType().isAir())
-            return -1;
-
-        CustomConfig data = shopConfigFiles.get(shopName);
-        if (data == null)
-            return -1;
-
-        int idx = 0;
-        for (String s : data.get().getKeys(false))
-        {
-            if (idx == 0) //Just skips the first data. (=Options). At least it should be much faster than 'tryCatch+parseInt'.
-            {
-                idx++;
-                continue;
-            }
-
-            if (!data.get().contains(s + ".value"))
-                continue; // 장식용임
-
-            if (data.get().getString(s + ".mat").equals(item.getType().toString()))
-            {
-                String metaStr = data.get().getString(s + ".itemStack");
-
-                if (metaStr == null && !item.hasItemMeta())
-                {
-                    return Integer.parseInt(s);
-                }
-
-                if (metaStr != null && metaStr.equals(item.getItemMeta().toString()))
-                {
-                    return Integer.parseInt(s);
-                }
-            }
-        }
-        return -1;
-    }
+    public static int findItemFromShop(String shopName, ItemStack item) {
+        
+    if (item == null || item.getType().isAir())
+      return -1; 
+        
+    CustomConfig data = shopConfigFiles.get(shopName);
+    if (data == null)
+      return -1; 
+        
+    int idx = 0;
+    for (String s : data.get().getKeys(false)) {
+      if (idx == 0) {
+        idx++;
+        continue;
+      } 
+        
+      if (!data.get().contains(s + ".value"))
+        continue; 
+        
+      if (data.get().getString(s + ".mat").equals(item.getType().toString())) {
+          
+        String metaStr = data.get().getString(s + ".itemStack");
+          
+        if (metaStr == null && !item.hasItemMeta())
+          return Integer.parseInt(s); 
+        // ItemMeta.tostring과 ItemStack.tostring이 같은 아이템인데 출력값이 달라 커스텀 모델로 조건 변경
+        if (metaStr != null && item.getItemMeta().hasCustomModelData() && metaStr.contains("custom-model-data=" + item.getItemMeta().getCustomModelData() + ""))
+          return Integer.parseInt(s); 
+      } 
+    } 
+    return -1;
+  }
 
     public static boolean hashExist(String shopName, String hash)
     {
